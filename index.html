@@ -53,6 +53,12 @@
         .sum-label { font-size: 0.7rem; opacity: 0.9; }
         .sum-val { font-size: 0.85rem; font-weight: bold; margin-top: 2px; }
 
+        /* עיצוב לחריגה מהיעד */
+        .exceeded {
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -88,8 +94,14 @@
             font-size: 0.85rem;
         }
 
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
         .btn-calc {
-            width: 100%;
+            flex: 2;
             background-color: #27ae60;
             color: white;
             border: none;
@@ -97,7 +109,18 @@
             font-size: 1rem;
             font-weight: bold;
             border-radius: 10px;
-            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .btn-reset {
+            flex: 1;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 10px;
             cursor: pointer;
         }
     </style>
@@ -109,11 +132,11 @@
         <div class="grid-summary">
             <div class="sum-box">
                 <div class="sum-label">חלבון</div>
-                <div class="sum-val"><span id="tot-p">0</span> / 160g</div>
+                <div class="sum-val"><span id="tot-p">0</span> / 130g</div>
             </div>
             <div class="sum-box">
                 <div class="sum-label">שומן</div>
-                <div class="sum-val"><span id="tot-f">0</span> / 173g</div>
+                <div class="sum-val"><span id="tot-f">0</span> / 135g</div>
             </div>
             <div class="sum-box">
                 <div class="sum-label">פחמימה</div>
@@ -121,7 +144,7 @@
             </div>
             <div class="sum-box">
                 <div class="sum-label">קלוריות</div>
-                <div class="sum-val"><span id="tot-cal">0</span> / 2300</div>
+                <div class="sum-val"><span id="tot-cal">0</span> / 1800</div>
             </div>
         </div>
     </div>
@@ -137,148 +160,223 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><div class="food-name">ביצה (L)</div><div class="portion">יחידה (60g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="6.3" data-f="5.0" data-c="0.4" data-cal="72" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>6.3 / 5 / 0.4</td>
+                    <td><div class="food-name">אבקת חלבון (Whey)</div><div class="portion">מנה אחת (30g)</div></td>
+                    <td><input type="number" id="food-whey" step="any" min="0" data-p="24.0" data-f="1.5" data-c="1.5" data-cal="118" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>24 / 1.5 / 1.5</td>
                 </tr>
                 <tr>
-                    <td><div class="food-name">חזה עוף</div><div class="portion">100g לפני בישול</div></td>
-                    <td><input type="number" step="any" min="0" data-p="22.5" data-f="2.6" data-c="0.0" data-cal="114" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>22.5 / 2.6 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">פרגית</div><div class="portion">100g לפני בישול</div></td>
-                    <td><input type="number" step="any" min="0" data-p="19.5" data-f="8.0" data-c="0.0" data-cal="150" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>19.5 / 8 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">בשר אדום טחון (20%)</div><div class="portion">100g לפני בישול</div></td>
-                    <td><input type="number" step="any" min="0" data-p="17.2" data-f="20.0" data-c="0.0" data-cal="250" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>17.2 / 20 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">דג סלמון</div><div class="portion">100g טרי</div></td>
-                    <td><input type="number" step="any" min="0" data-p="20.4" data-f="13.4" data-c="0.0" data-cal="206" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>20.4 / 13.4 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">טונה במים</div><div class="portion">קופסה מסוננת (112g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="26.0" data-f="1.0" data-c="0.0" data-cal="115" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>26 / 1 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">סרדינים בשמן זית</div><div class="portion">קופסה מסוננת (90g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="22.0" data-f="10.5" data-c="0.0" data-cal="185" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>22 / 10.5 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">שמן זית</div><div class="portion">כף אחת (15 מ"ל)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.0" data-f="14.0" data-c="0.0" data-cal="125" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>0 / 14 / 0</td>
+                    <td><div class="food-name">אבוקדו</div><div class="portion">יחידה בינונית (150g)</div></td>
+                    <td><input type="number" id="food-avocado" step="any" min="0" data-p="3.0" data-f="22.0" data-c="3.0" data-cal="240" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>3 / 22 / 3</td>
                 </tr>
                 <tr>
                     <td><div class="food-name">אגוז מלך בודד</div><div class="portion">חצי כפול (5g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.8" data-f="3.3" data-c="0.4" data-cal="33" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><input type="number" id="food-walnut" step="any" min="0" data-p="0.8" data-f="3.3" data-c="0.4" data-cal="33" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>0.8 / 3.3 / 0.4</td>
                 </tr>
                 <tr>
                     <td><div class="food-name">אגוז פקאן בודד</div><div class="portion">יחידה אחת (3g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.3" data-f="2.2" data-c="0.1" data-cal="20" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><input type="number" id="food-pecan" step="any" min="0" data-p="0.3" data-f="2.2" data-c="0.1" data-cal="20" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>0.3 / 2.2 / 0.1</td>
                 </tr>
                 <tr>
-                    <td><div class="food-name">אבוקדו</div><div class="portion">יחידה בינונית (150g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="3.0" data-f="22.0" data-c="3.0" data-cal="240" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>3 / 22 / 3</td>
+                    <td><div class="food-name">אוכמניות טריות</div><div class="portion">חצי כוס (75g)</div></td>
+                    <td><input type="number" id="food-blueberry" step="any" min="0" data-p="0.6" data-f="0.2" data-c="8.8" data-cal="42" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.6 / 0.2 / 8.8</td>
                 </tr>
                 <tr>
-                    <td><div class="food-name">סלק בינוני לא מבושל</div><div class="portion">יחידה אחת (110g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="1.8" data-f="0.2" data-c="7.8" data-cal="47" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>1.8 / 0.2 / 7.8</td>
+                    <td><div class="food-name">בננה</div><div class="portion">יחידה בינונית (100g)</div></td>
+                    <td><input type="number" id="food-banana" step="any" min="0" data-p="1.1" data-f="0.3" data-c="22.8" data-cal="89" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>1.1 / 0.3 / 22.8</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">בשר אדום טחון (20%)</div><div class="portion">100g לפני בישול</div></td>
+                    <td><input type="number" id="food-groundbeef" step="any" min="0" data-p="17.2" data-f="20.0" data-c="0.0" data-cal="250" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>17.2 / 20 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">ביצה (L)</div><div class="portion">יחידה (60g)</div></td>
+                    <td><input type="number" id="food-egg" step="any" min="0" data-p="6.3" data-f="5.0" data-c="0.4" data-cal="72" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>6.3 / 5 / 0.4</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">בירה</div><div class="portion">חצי ליטר (500 מ"ל)</div></td>
+                    <td><input type="number" id="food-beer" step="any" min="0" data-p="2.5" data-f="0.0" data-c="20.0" data-cal="215" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>2.5 / 0 / 20</td>
                 </tr>
                 <tr>
                     <td><div class="food-name">גבינה צהובה</div><div class="portion">פרוסה אחת (28g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="7.0" data-f="8.0" data-c="0.4" data-cal="100" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><input type="number" id="food-yellowcheese" step="any" min="0" data-p="7.0" data-f="8.0" data-c="0.4" data-cal="100" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>7 / 8 / 0.4</td>
                 </tr>
                 <tr>
                     <td><div class="food-name">גבינה רכה שמנה (30%)</div><div class="portion">כף אחת (30g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="1.8" data-f="9.0" data-c="0.9" data-cal="93" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><input type="number" id="food-softcheese" step="any" min="0" data-p="1.8" data-f="9.0" data-c="0.9" data-cal="93" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>1.8 / 9 / 0.9</td>
                 </tr>
                 <tr>
-                    <td><div class="food-name">יוגורט יווני (10%)</div><div class="portion">כף אחת (30g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="1.8" data-f="3.0" data-c="1.0" data-cal="38" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>1.8 / 3 / 1</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">המבורגר בקר (20%)</div><div class="portion">200g לפני צלייה</div></td>
-                    <td><input type="number" step="any" min="0" data-p="34.4" data-f="40.0" data-c="0.0" data-cal="500" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>34.4 / 40 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">קוטג' 9%</div><div class="portion">כף גדושה (30g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="3.1" data-f="2.7" data-c="0.8" data-cal="40" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>3.1 / 2.7 / 0.8</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">אבקת חלבון (Whey)</div><div class="portion">מנה אחת (30g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="24.0" data-f="1.5" data-c="1.5" data-cal="118" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>24 / 1.5 / 1.5</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">חמאה</div><div class="portion">כף אחת (14g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.1" data-f="11.5" data-c="0.0" data-cal="102" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>0.1 / 11.5 / 0</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">גרעיני חמנייה</div><div class="portion">כף אחת (15g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="3.1" data-f="7.7" data-c="1.7" data-cal="88" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>3.1 / 7.7 / 1.7</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">שבבי קוקוס</div><div class="portion">כף אחת (10g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.7" data-f="6.5" data-c="0.7" data-cal="66" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>0.7 / 6.5 / 0.7</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">אוכמניות טריות</div><div class="portion">חצי כוס (75g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.6" data-f="0.2" data-c="8.8" data-cal="42" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>0.6 / 0.2 / 8.8</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">פרוסת לחם שיפון מלא ממחמצת</div><div class="portion">פרוסה אחת (כ-40g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="3.2" data-f="1.0" data-c="17.0" data-cal="85" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>3.2 / 1 / 17</td>
-                </tr>
-                <tr>
-                    <td><div class="food-name">תרד טרי</div><div class="portion">כוס אחת (30g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.9" data-f="0.1" data-c="0.4" data-cal="7" onchange="calculateTotals()" oninput="calculateTotals()"></td>
-                    <td>0.9 / 0.1 / 0.4</td>
-                </tr>
-                <tr>
                     <td><div class="food-name">גבינת פרמזן</div><div class="portion">כף אחת (10g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="3.8" data-f="2.8" data-c="0.4" data-cal="43" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><input type="number" id="food-parmesan" step="any" min="0" data-p="3.8" data-f="2.8" data-c="0.4" data-cal="43" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>3.8 / 2.8 / 0.4</td>
                 </tr>
                 <tr>
-                    <td><div class="food-name">שמן קוקוס</div><div class="portion">כף אחת (13g)</div></td>
-                    <td><input type="number" step="any" min="0" data-p="0.0" data-f="13.0" data-c="0.0" data-cal="117" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td><div class="food-name">גרעיני חמנייה</div><div class="portion">כף אחת (15g)</div></td>
+                    <td><input type="number" id="food-sunflower" step="any" min="0" data-p="3.1" data-f="7.7" data-c="1.7" data-cal="88" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>3.1 / 7.7 / 1.7</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">דג סלמון</div><div class="portion">100g טרי</div></td>
+                    <td><input type="number" id="food-salmon" step="any" min="0" data-p="20.4" data-f="13.4" data-c="0.0" data-cal="206" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>20.4 / 13.4 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">המבורגר בקר (20%)</div><div class="portion">200g לפני צלייה</div></td>
+                    <td><input type="number" id="food-hamburger" step="any" min="0" data-p="34.4" data-f="40.0" data-c="0.0" data-cal="500" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>34.4 / 40 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">חב' שיפון מלא ממחמצת</div><div class="portion">פרוסה אחת (כ-40g)</div></td>
+                    <td><input type="number" id="food-ryebread" step="any" min="0" data-p="3.2" data-f="1.0" data-c="17.0" data-cal="85" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>3.2 / 1 / 17</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">חז' עוף</div><div class="portion">100g לפני בישול</div></td>
+                    <td><input type="number" id="food-chickenbreast" step="any" min="0" data-p="22.5" data-f="2.6" data-c="0.0" data-cal="114" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>22.5 / 2.6 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">חלב</div><div class="portion">חצי כוס (120 מ"ל)</div></td>
+                    <td><input type="number" id="food-milk" step="any" min="0" data-p="3.8" data-f="4.0" data-c="6.0" data-cal="75" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>3.8 / 4 / 6</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">חמאה</div><div class="portion">כף אחת (14g)</div></td>
+                    <td><input type="number" id="food-butter" step="any" min="0" data-p="0.1" data-f="11.5" data-c="0.0" data-cal="102" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.1 / 11.5 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">טונה במים</div><div class="portion">קופסה מסוננת (112g)</div></td>
+                    <td><input type="number" id="food-tuna" step="any" min="0" data-p="26.0" data-f="1.0" data-c="0.0" data-cal="115" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>26 / 1 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">יוגורט יווני (10%)</div><div class="portion">כף אחת (30g)</div></td>
+                    <td><input type="number" id="food-greekyogurt" step="any" min="0" data-p="1.8" data-f="3.0" data-c="1.0" data-cal="38" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>1.8 / 3 / 1</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">כבד בקר</div><div class="portion">100g מבושל/צרוב</div></td>
+                    <td><input type="number" id="food-beefliver" step="any" min="0" data-p="26.0" data-f="4.8" data-c="3.8" data-cal="175" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>26 / 4.8 / 3.8</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">כבד עוף</div><div class="portion">100g מבושל/צרוב</div></td>
+                    <td><input type="number" id="food-chickenliver" step="any" min="0" data-p="24.5" data-f="6.5" data-c="0.9" data-cal="167" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>24.5 / 6.5 / 0.9</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">מיונז</div><div class="portion">כף אחת (15g)</div></td>
+                    <td><input type="number" id="food-mayo" step="any" min="0" data-p="0.1" data-f="11.0" data-c="0.1" data-cal="100" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.1 / 11 / 0.1</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">סארדינים בשמן זית</div><div class="portion">קופסה מסוננת (90g)</div></td>
+                    <td><input type="number" id="food-sardines" step="any" min="0" data-p="22.0" data-f="10.5" data-c="0.0" data-cal="185" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>22 / 10.5 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">סלט ירקות ירוקים</div><div class="portion">100g</div></td>
+                    <td><input type="number" id="food-greensalad" step="any" min="0" data-p="1.5" data-f="0.3" data-c="3.5" data-cal="25" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>1.5 / 0.3 / 3.5</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">סלק בינוני לא מבושל</div><div class="portion">יחידה אחת (110g)</div></td>
+                    <td><input type="number" id="food-beetroot" step="any" min="0" data-p="1.8" data-f="0.2" data-c="7.8" data-cal="47" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>1.8 / 0.2 / 7.8</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">סטייק אנטריקוט</div><div class="portion">100g לפני בישול</div></td>
+                    <td><input type="number" id="food-entrecote" step="any" min="0" data-p="20.0" data-f="22.0" data-c="0.0" data-cal="275" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>20 / 22 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">פרגית</div><div class="portion">100g לפני בישול</div></td>
+                    <td><input type="number" id="food-pargit" step="any" min="0" data-p="19.5" data-f="8.0" data-c="0.0" data-cal="150" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>19.5 / 8 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">קוטג' 9%</div><div class="portion">כף גדושה (30g)</div></td>
+                    <td><input type="number" id="food-cottage" step="any" min="0" data-p="3.1" data-f="2.7" data-c="0.8" data-cal="40" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>3.1 / 2.7 / 0.8</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">שבבי קוקוס</div><div class="portion">כף אחת (10g)</div></td>
+                    <td><input type="number" id="food-coconutflakes" step="any" min="0" data-p="0.7" data-f="6.5" data-c="0.7" data-cal="66" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.7 / 6.5 / 0.7</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">שומן קוקוס</div><div class="portion">כף אחת (13g)</div></td>
+                    <td><input type="number" id="food-coconutoil" step="any" min="0" data-p="0.0" data-f="13.0" data-c="0.0" data-cal="117" onchange="calculateTotals()" oninput="calculateTotals()"></td>
                     <td>0 / 13 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">שז' זית</div><div class="portion">כף אחת (15 מ"ל)</div></td>
+                    <td><input type="number" id="food-oliveoil" step="any" min="0" data-p="0.0" data-f="14.0" data-c="0.0" data-cal="125" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0 / 14 / 0</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">שמנת 30%</div><div class="portion">כף אחת (15g)</div></td>
+                    <td><input type="number" id="food-heavycream" step="any" min="0" data-p="0.4" data-f="4.5" data-c="0.5" data-cal="44" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.4 / 4.5 / 0.5</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">שקדים</div><div class="portion">יחידה אחת (~1g)</div></td>
+                    <td><input type="number" id="food-almonds" step="any" min="0" data-p="0.2" data-f="0.5" data-c="0.1" data-cal="6" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.2 / 0.5 / 0.1</td>
+                </tr>
+                <tr>
+                    <td><div class="food-name">תרד טרי</div><div class="portion">כוס אחת (30g)</div></td>
+                    <td><input type="number" id="food-spinach" step="any" min="0" data-p="0.9" data-f="0.1" data-c="0.4" data-cal="7" onchange="calculateTotals()" oninput="calculateTotals()"></td>
+                    <td>0.9 / 0.1 / 0.4</td>
                 </tr>
             </tbody>
         </table>
 
-        <button type="button" class="btn-calc" onclick="calculateTotals()">עדכן חישוב</button>
+        <div class="btn-group">
+            <button type="button" class="btn-calc" onclick="calculateTotals()">עדכן חישוב</button>
+            <button type="button" class="btn-reset" onclick="resetForm()">איפוס טבלה</button>
+        </div>
     </form>
 
     <script>
+        // יעדים יומיים
+        var TARGET_P = 130;
+        var TARGET_F = 135;
+        var TARGET_C = 25;
+        var TARGET_CAL = 1800;
+
+        // טעינת הנתונים שנשמרו בעת פתיחת הדף
+        window.onload = function() {
+            var inputs = document.querySelectorAll('input[type="number"]');
+            for (var i = 0; i < inputs.length; i++) {
+                var savedVal = localStorage.getItem('keto_' + i);
+                if (savedVal !== null && savedVal !== "") {
+                    inputs[i].value = savedVal;
+                }
+            }
+            calculateTotals();
+        };
+
         function calculateTotals() {
             var inputs = document.querySelectorAll('input[type="number"]');
             var totalP = 0, totalF = 0, totalC = 0, totalCal = 0;
 
             for (var i = 0; i < inputs.length; i++) {
-                var qty = parseFloat(inputs[i].value);
+                var val = inputs[i].value;
+                // שמירת הערך ב-localStorage
+                localStorage.setItem('keto_' + i, val);
+
+                var qty = parseFloat(val);
                 if (!isNaN(qty) && qty > 0) {
                     totalP += qty * parseFloat(inputs[i].getAttribute('data-p'));
                     totalF += qty * parseFloat(inputs[i].getAttribute('data-f'));
@@ -287,10 +385,34 @@
                 }
             }
 
-            document.getElementById('tot-p').innerText = totalP.toFixed(1);
-            document.getElementById('tot-f').innerText = totalF.toFixed(1);
-            document.getElementById('tot-c').innerText = totalC.toFixed(1);
-            document.getElementById('tot-cal').innerText = Math.round(totalCal);
+            var elP = document.getElementById('tot-p');
+            var elF = document.getElementById('tot-f');
+            var elC = document.getElementById('tot-c');
+            var elCal = document.getElementById('tot-cal');
+
+            // עדכון ערכים
+            elP.innerText = totalP.toFixed(1);
+            elF.innerText = totalF.toFixed(1);
+            elC.innerText = totalC.toFixed(1);
+            elCal.innerText = Math.round(totalCal);
+
+            // בדיקת חריגה מכל יעד וצביעה באדום
+            if (totalP > TARGET_P) { elP.classList.add('exceeded'); } else { elP.classList.remove('exceeded'); }
+            if (totalF > TARGET_F) { elF.classList.add('exceeded'); } else { elF.classList.remove('exceeded'); }
+            if (totalC > TARGET_C) { elC.classList.add('exceeded'); } else { elC.classList.remove('exceeded'); }
+            if (totalCal > TARGET_CAL) { elCal.classList.add('exceeded'); } else { elCal.classList.remove('exceeded'); }
+        }
+
+        // פונקציית איפוס הטבלה והזיכרון
+        function resetForm() {
+            if (confirm("האם אתה בטוח שברצונך לאפס את כל השדות בטבלה?")) {
+                var inputs = document.querySelectorAll('input[type="number"]');
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].value = "";
+                    localStorage.removeItem('keto_' + i);
+                }
+                calculateTotals();
+            }
         }
     </script>
 </body>
